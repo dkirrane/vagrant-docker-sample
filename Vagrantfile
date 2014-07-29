@@ -27,8 +27,6 @@ ENV['VAGRANT_DEFAULT_PROVIDER'] = 'docker'
 Vagrant.configure("2") do |config|
     config.vm.define "phusion" do |v|
         v.vm.provider "docker" do |d|
-          # d.cmd = ["/sbin/my_init", "--enable-insecure-key"]
-          # d.image = "phusion/baseimage"
           d.build_dir = "."
           d.name = 'dockerizedvm'
           d.has_ssh = true
