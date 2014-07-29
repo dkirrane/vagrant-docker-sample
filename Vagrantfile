@@ -1,8 +1,35 @@
+##
+#
+# https://github.com/phusion/baseimage-docker#login_ssh
+#
+# Setup SSH key
+# curl -o insecure_key -fSL https://github.com/phusion/baseimage-docker/raw/master/image/insecure_key
+# chmod 600 insecure_key
+#
+#
+# Run:
+# vagrant up
+# vagrant up --provider=docker --debug
+#
+# vagrant docker-logs
+# vagrant global-status --prune
+# vagrant status
+# vagrant ssh
+# vagrant reload
+# vagrant destroy
+#
+###
+
+VAGRANTFILE_API_VERSION = "2"
+
+ENV['VAGRANT_DEFAULT_PROVIDER'] = 'docker'
+
 Vagrant.configure("2") do |config|
     config.vm.define "phusion" do |v|
         v.vm.provider "docker" do |d|
-          d.cmd = ["/sbin/my_init", "--enable-insecure-key"]
-          d.image = "phusion/baseimage"
+          # d.cmd = ["/sbin/my_init", "--enable-insecure-key"]
+          # d.image = "phusion/baseimage"
+          d.build_dir = "."
           d.name = 'dockerizedvm'
           d.has_ssh = true
           #d.force_host_vm = true
