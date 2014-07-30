@@ -17,7 +17,7 @@ CMD ["/sbin/my_init"]
 # ...put your own build instructions here...
 #######################################################################################
 # Download latest package lists
-# RUN apt-get update
+RUN apt-get update
 
 
 ########################
