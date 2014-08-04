@@ -24,20 +24,25 @@ RUN apt-get update
 # Install dependencies
 # Nginx: https://github.com/dockerfile/nginx/blob/master/Dockerfile
 ########################
-# RUN apt-get install -yq \
-#      wget \
-#      nginx
+RUN apt-get install -yq \
+      wget \
+      nginx
 
 
-# # Setup config files
-# RUN echo "daemon off;" >> /etc/nginx/nginx.conf
+# Setup Nginx config files
+RUN echo "daemon off;" >> /etc/nginx/nginx.conf
 
-# RUN mkdir /etc/service/nginx
-# ADD ./runit/nginx.sh /etc/service/nginx/run
+# Setup Nginx static site
+ADD ./nginx/default /etc/nginx/sites-available/default
+ADD ./nginx/index.html /var/www
 
-# # Expose ports.
-# EXPOSE 80
-# EXPOSE 443
+# Add Nginx Runit service
+RUN mkdir /etc/service/nginx
+ADD ./runit/nginx.sh /etc/service/nginx/run
+
+# Expose ports.
+EXPOSE 80
+EXPOSE 443
 
 
 #######################################################################################

@@ -25,17 +25,20 @@ VAGRANTFILE_API_VERSION = "2"
 ENV['VAGRANT_DEFAULT_PROVIDER'] = 'docker'
 
 Vagrant.configure("2") do |config|
-    config.vm.define "phusion" do |v|
-        v.vm.provider "docker" do |d|
-          d.build_dir = "./Docker"
-          d.name = 'dockerizedvm'
-          d.has_ssh = true
-          #d.force_host_vm = true
-        end
-        v.ssh.port = 22
-        v.ssh.username = 'root'
-        v.ssh.private_key_path = 'insecure_key'
-        v.vm.provision "shell", inline: "echo hello"
-        #v.vm.synced_folder "./keys", "/vagrant"
+
+  config.vm.network "forwarded_port", guest: 80, host: 8080
+
+  config.vm.define "phusion" do |v|
+    v.vm.provider "docker" do |d|
+      d.build_dir = "./Docker"
+      d.name = 'dockerizedvm'
+      d.has_ssh = true
+      #d.force_host_vm = true
     end
+    v.ssh.port = 22
+    v.ssh.username = 'root'
+    v.ssh.private_key_path = 'insecure_key'
+    v.vm.provision "shell", inline: "echo hello"
+    #v.vm.synced_folder "./keys", "/vagrant"
+  end
 end
