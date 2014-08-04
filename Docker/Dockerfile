@@ -34,7 +34,7 @@ RUN echo "daemon off;" >> /etc/nginx/nginx.conf
 
 # Setup Nginx static site
 ADD ./nginx/default /etc/nginx/sites-available/default
-ADD ./nginx/index.html /var/www
+ADD ./nginx/site/index.html /var/www
 
 # Add Nginx Runit service
 RUN mkdir /etc/service/nginx
